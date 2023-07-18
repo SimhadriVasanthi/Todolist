@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import './App.css'
 
-function App() {
+const App = () => {
+
+  const [item, setItem] = useState("")
+  const [todoList, setTodoList] = useState([])
+
+  const itemHandler = (e) => {
+    setItem(e.target.value)
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    setTodoList([...todoList, item])
+    setItem("")
+
+  }
+
+  const deleteHandler = (i) => {
+  console.log("clicked",i)
+  // console.log(todoList[i])
+
+  }
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className='App-header'>
+        Todolist
+      </h1>
+      <form onSubmit={submitHandler}>
+        <input type="text" value={item} onChange={itemHandler} /> <br />
+        <button type="submit"> submit</button>
+      </form>
+      <div>
+        List items
+        {todoList.map((item, i) => 
+          <div key ={i}>
+          <span>{item}</span>
+          <button onClick = {deleteHandler(i)}>Delete</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
